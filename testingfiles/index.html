@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Upload</title>
+  </head>
+
+  <body>
+    <h1>File Upload</h1>
+    <form
+      method="POST"
+      action="javascript:upload()"
+      enctype="multipart/form-data"
+    >
+      <!-- <p><input type="file" name="file_attachment"></p> -->
+      <p><input type="text" name="file_attachment" value="ds" /></p>
+      <p><input type="submit" value="Submit" /></p>
+    </form>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    function upload() {
+      var formData = new FormData();
+      // formData.append('file_attachment', $('input[name=file_attachment]')[0].files[0]);
+      formData.append(
+        "file_attachment",
+        "$('input[name=file_attachment]')[0].value"
+      );
+      // console.log($('input[name=file_attachment]').files[0])
+      $.ajax({
+        url: "http://127.0.0.1:5000/upload",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          alert(data);
+        },
+      });
+    }
+  </script>
+</html>
