@@ -47,6 +47,9 @@ CORS(app)
 @cross_origin()
 
 def upload_file():
+    global scaler_path
+    scaler_path=os.getcwd()
+    print('path------->',scaler_path)
     target=os.path.join(UPLOAD_FOLDER,'upload')
     if not os.path.isdir(target):
         os.mkdir(target)
@@ -108,8 +111,11 @@ def hello_world():
     #     print("PATHHHHH ------>"+myPath)        
     
     # directory='C:/Users/shehr/OneDrive/Documents/chalega/model/test_audio'
+    print(destination)
+
 
     new_path = rem_Silence(destination)
+    os.remove(destination)
     # arr=np.array([])
     if os.path.isdir(new_path): 
         arr=[]
@@ -124,7 +130,7 @@ def hello_world():
                 res = get_features(f)
                 os.remove(f)
                 print('FILE REMOVED [==============================]>',f)
-                scaler=load('C:/Users/shehr/OneDrive/Desktop/Flask/std_scaler.bin')
+                scaler=load(scaler_path+'\\'+'std_scaler.bin')
                 test1 = scaler.transform(res)
                 x = np.expand_dims(test1, axis=2)
                 pred_test = model.predict(x)
@@ -148,7 +154,7 @@ def hello_world():
         res = get_features(new_path)
         print("--WHEN YOU HAVE 1 FILE-->",new_path)
         # scaler = StandardScaler()
-        scaler=load('C:/Users/shehr/OneDrive/Desktop/Flask/std_scaler.bin')
+        scaler=load(scaler_path+'\\'+'std_scaler.bin')
         test1 = scaler.transform(res)
         x = np.expand_dims(test1, axis=2)
         pred_test = model.predict(x)
